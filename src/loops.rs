@@ -27,6 +27,14 @@ pub fn loops() {
     println!("layer_outputs: {:#?}", layer_outputs);
 }
 
+/*
+let output = [
+        inputs[0] * weights1[0] + inputs[1] * weights1[1] + inputs[2] * weights1[2] + inputs[3] * weights1[3] + bias1,
+        inputs[0] * weights2[0] + inputs[1] * weights2[1] + inputs[2] * weights2[2] + inputs[3] * weights2[3] + bias2,
+        inputs[0] * weights3[0] + inputs[1] * weights3[1] + inputs[2] * weights3[2] + inputs[3] * weights3[3] + bias3,
+        ];
+ */
+
 pub fn zip_loops() {
     // Basic neuron with hard-coded values
     let inputs = [1.0, 2.0, 3.0, 2.5];
@@ -39,50 +47,43 @@ pub fn zip_loops() {
 
     let biases = [2.0, 3.0, 0.5];
 
-    // let zipped: Vec<((&f64, &[f64; 4]), &f64)> =
-    let results: Vec<_> = inputs
+    let results: Vec<f64> = weights
         .iter()
-        .zip(weights.iter())
         .zip(biases.iter())
-        .map(|((input, weights), bias)| {
-            println!("multiplying {} with each element in {:#?} and adding {}", input, weights, bias);
-            let collected_weights: f64 = weights
+        .map(|(weights, bias)| {
+            weights
                 .iter()
-                .map(|w| {
-                    let multiplied_weight = w * input;
-                    // print!("{} * {} = {}\n", w, input, multiplied_weight);
-                    return multiplied_weight;
-                })
-                .sum();
-            return collected_weights + bias;
+                .zip(inputs.iter())
+                .map(|(w, i)| w * i)
+                .sum::<f64>()
+                + bias
         })
         .collect();
-    // let from_iter: Vec<f64> = dummy.iter().map(|f| *f).collect();
-    // let zipped: Vec<f64> = inputs.iter().zip(weights.iter()).zip(biases.iter()).map(|((n_input, neuron_weights), n_bias)| {
-    //     let result = neuron_weights.map(|weight| {
-    //         return n_input * weight;
-    //     }).sum() + n_bias;
-    //     return result;
-    // }).map(|x| *x);
-
-    // let zipped: Vec<std::iter::Zip<f64, f64>> = biases.iter().zip(dummy.iter()).collect();
 
     println!("{:#?}", results);
+}
 
-    // let layer_outputs = inputs.iter().zip(weights.iter());
-    // println!("{:#?}", layer_outputs.zip(biases.iter()).map(|((input, weights), bias)| weights.iter().map(|w| w * input + bias)));
+pub fn dot(arr1: &[f64], arr2: &[f64]) -> f64 {
+    assert_eq!(arr1.len(), arr2.len());
+    arr1.iter().zip(arr2.iter()).map(|(a, b)| a * b).sum()
+}
 
-    // let layer_outputs = inputs.iter().zip(biases.iter()).zip(weights.iter()).map(
-    //     | tup | {
-    //         println!("{}, {}, {:#?}", tup.0.0, tup.0.1, tup.1);
-    //         // [tup.0.0, tup.0.1, tup.1]
-    //         tup
-    //         // |((n_input, neuron_bias), neuron_weights)| {
-    //         // // | tup | {
-    //         //     let val = neuron_weights.iter().map(|w| (w * n_input + neuron_bias).copy());
-    //         //     return val;
-    //     },
-    // );
+pub fn add_arrays(arr1: &[f64], arr2: &[f64]) -> Vec<f64> {
+    arr1.iter().zip(arr2.iter()).map(|(a, b)| a + b).collect()
+}
 
-    // println!("layer_outputs: {:#?}", layer_outputs);
+pub fn element_add(arr1: &[f64], value: f64) -> Vec<f64> {
+    arr1.iter().map(|el| el + value).collect()
+}
+
+pub fn with_dot(inputs: &[f64], weights: &[[f64; 4]], biases: &[f64]) {
+
+    let results: Vec<_> = weights
+        .iter()
+        .map(|w| dot(w, &inputs))
+        .zip(biases.iter())
+        .map(|(d, b)| d + b)
+        .collect();
+
+    println!("{:#?}", results);
 }
