@@ -1,3 +1,21 @@
+use ndarray::{arr1, arr2};
+
+pub fn ndarray_dot() {
+    let inputs = arr1(&[1.0, 2.0, 3.0, 2.5]);
+    let weights = arr2(&[
+        [0.2, 0.8, -0.5, 1.0],
+        [0.5, -0.91, 0.26, -0.5],
+        [-0.26, -0.27, 0.17, 0.87],
+    ]);
+    let biases = arr1(&[2.0, 3.0, 0.5]);
+    let dotted = weights.dot(&inputs);
+    println!("dotted: {}", dotted);
+
+    let result = weights.dot(&inputs) + biases;
+
+    println!("{}", result);
+}
+
 pub fn loops() {
     // Basic neuron with hard-coded values
     let inputs = [1.0, 2.0, 3.0, 2.5];
@@ -76,7 +94,6 @@ pub fn element_add(arr1: &[f64], value: f64) -> Vec<f64> {
     arr1.iter().map(|el| el + value).collect()
 }
 
-use ndarray::arr1;
 pub fn with_dot(inputs: &[f64], weights: &[[f64; 4]], biases: &[f64]) {
 
     let results: Vec<_> = weights

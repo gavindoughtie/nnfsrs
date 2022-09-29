@@ -1,1 +1,1 @@
-pub mod loops;
+pub mod dot_products;
