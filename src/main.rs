@@ -1,4 +1,4 @@
-use nnfsrs::dot_products::{loops, ndarray_dot, with_dot, zip_loops};
+use nnfsrs::p3_dot_products::{loops, ndarray_dot, with_dot, zip_loops};
 
 fn main() {
     // Basic neuron with hard-coded values

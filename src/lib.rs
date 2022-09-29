@@ -1,1 +1,1 @@
-pub mod dot_products;
+pub mod p3_dot_products;
