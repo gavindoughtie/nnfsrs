@@ -76,6 +76,7 @@ pub fn element_add(arr1: &[f64], value: f64) -> Vec<f64> {
     arr1.iter().map(|el| el + value).collect()
 }
 
+use ndarray::arr1;
 pub fn with_dot(inputs: &[f64], weights: &[[f64; 4]], biases: &[f64]) {
 
     let results: Vec<_> = weights
@@ -86,4 +87,12 @@ pub fn with_dot(inputs: &[f64], weights: &[[f64; 4]], biases: &[f64]) {
         .collect();
 
     println!("{:#?}", results);
+
+    let a1 = [3.0, 6.0, 9.0];
+    let a2 = [1.0, 2.0, 3.0];
+    let a1_nd = arr1(&a1);
+    let a2_nd = arr1(&a2);
+    let nd_dot = a1_nd.dot(&a2_nd);
+    let my_dot = dot(&a1, &a2);
+    println!("nd_dot: {}, my_dot: {}", nd_dot, my_dot);
 }
