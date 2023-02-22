@@ -1,13 +1,11 @@
 use ndarray::{arr1, arr2};
 
+use crate::example_data::{BIASES_1_3, INPUTS_1_4, WEIGHTS_3_4};
+
 pub fn ndarray_dot() {
-    let inputs = arr1(&[1.0, 2.0, 3.0, 2.5]);
-    let weights = arr2(&[
-        [0.2, 0.8, -0.5, 1.0],
-        [0.5, -0.91, 0.26, -0.5],
-        [-0.26, -0.27, 0.17, 0.87],
-    ]);
-    let biases = arr1(&[2.0, 3.0, 0.5]);
+    let inputs = arr1(&INPUTS_1_4);
+    let weights = arr2(&WEIGHTS_3_4);
+    let biases = arr1(&BIASES_1_3);
     let dotted = weights.dot(&inputs);
     println!("dotted: {}", dotted);
 
@@ -18,15 +16,9 @@ pub fn ndarray_dot() {
 
 pub fn loops() {
     // Basic neuron with hard-coded values
-    let inputs = [1.0, 2.0, 3.0, 2.5];
-
-    let weights = [
-        [0.2, 0.8, -0.5, 1.0],
-        [0.5, -0.91, 0.26, -0.5],
-        [-0.26, -0.27, 0.17, 0.87],
-    ];
-
-    let biases = [2.0, 3.0, 0.5];
+    let inputs = INPUTS_1_4;
+    let weights = WEIGHTS_3_4;
+    let biases = BIASES_1_3;
 
     let mut layer_outputs = vec![];
 
@@ -55,15 +47,9 @@ let output = [
 
 pub fn zip_loops() {
     // Basic neuron with hard-coded values
-    let inputs = [1.0, 2.0, 3.0, 2.5];
-
-    let weights = [
-        [0.2, 0.8, -0.5, 1.0],
-        [0.5, -0.91, 0.26, -0.5],
-        [-0.26, -0.27, 0.17, 0.87],
-    ];
-
-    let biases = [2.0, 3.0, 0.5];
+    let inputs = INPUTS_1_4;
+    let weights = WEIGHTS_3_4;
+    let biases = BIASES_1_3;
 
     let results: Vec<f64> = weights
         .iter()
@@ -95,7 +81,6 @@ pub fn element_add(arr1: &[f64], value: f64) -> Vec<f64> {
 }
 
 pub fn with_dot(inputs: &[f64], weights: &[[f64; 4]], biases: &[f64]) {
-
     let results: Vec<_> = weights
         .iter()
         .map(|w| dot(w, &inputs))

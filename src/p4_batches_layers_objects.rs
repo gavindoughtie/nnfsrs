@@ -16,6 +16,50 @@ pub fn transpose(inputs: &[[f64; 4]; 3]) -> [[f64; 3]; 4] {
     return transposed;
 }
 
+pub fn dot_product(inputs: &[[f64; 4]; 3], weights: &[[f64; 4]; 3]) -> [[f64; 4]; 3] {
+    let mut outputs = [
+        [0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0],
+    ];
+    outputs[0][0] = dot(&inputs[0], &weights[0]);
+    outputs[0][1] = dot(&inputs[0], &weights[1]);
+    outputs[0][2] = dot(&inputs[0], &weights[2]);
+    outputs[0][3] = dot(&inputs[0], &weights[3]);
+    outputs[1][0] = dot(&inputs[1], &weights[0]);
+    outputs[1][1] = dot(&inputs[1], &weights[1]);
+    outputs[1][2] = dot(&inputs[1], &weights[2]);
+    outputs[1][3] = dot(&inputs[1], &weights[3]);
+    outputs[2][0] = dot(&inputs[2], &weights[0]);
+    outputs[2][1] = dot(&inputs[2], &weights[1]);
+    outputs[2][2] = dot(&inputs[2], &weights[2]);
+    outputs[2][3] = dot(&inputs[2], &weights[3]);
+
+    outputs
+}
+
+pub fn add_bias(inputs: &[[f64; 4]; 3], bias: &[f64; 4]) -> [[f64; 4]; 3] {
+    let mut outputs = [
+        [0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0],
+    ];
+    outputs[0][0] = inputs[0][0] + bias[0];
+    outputs[0][1] = inputs[0][1] + bias[1];
+    outputs[0][2] = inputs[0][2] + bias[2];
+    outputs[0][3] = inputs[0][3] + bias[3];
+    outputs[1][0] = inputs[1][0] + bias[0];
+    outputs[1][1] = inputs[1][1] + bias[1];
+    outputs[1][2] = inputs[1][2] + bias[2];
+    outputs[1][3] = inputs[1][3] + bias[3];
+    outputs[2][0] = inputs[2][0] + bias[0];
+    outputs[2][1] = inputs[2][1] + bias[1];
+    outputs[2][2] = inputs[2][2] + bias[2];
+    outputs[2][3] = inputs[2][3] + bias[3];
+
+    outputs
+}
+
 pub fn f_mult(input_vector: &[f64], weights_vector: &[f64; 3]) -> f64 {
     let dot_result = dot(input_vector, weights_vector);
     println!(
